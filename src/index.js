@@ -1,7 +1,7 @@
-const { Server } = require("socket.io");
-
-const io = new Server({ /* options */ });
-
+const httpServer = require("http").createServer();
+const io = require("socket.io")(httpServer, {
+  // ...
+});
 const registerRecordHandlers = require("./handlers/recordHandler");
 
 const onConnection = (socket) => {
@@ -10,4 +10,4 @@ const onConnection = (socket) => {
 
 io.on("connection", onConnection);
 
-io.listen(3000);
+httpServer.listen(3000);
