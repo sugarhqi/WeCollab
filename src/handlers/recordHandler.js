@@ -41,7 +41,13 @@ module.exports = (io, socket) => {
     console.log('delete:' + JSON.stringify(data));
     _emit('record:edit', data);
   };
-
+  const broadcastUpdate = (data) => {
+    io.emit('broadcastUpdate', data);
+  };
+  socket.on("chatmsg", (data) => {
+    //console.log(data.value);
+    broadcastUpdate(data);
+  });
   socket.on("record:register", registerRecord);
   socket.on("record:unregister", unregisterRecord);
   socket.on("disconnect", unregisterRecord);
